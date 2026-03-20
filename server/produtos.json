@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1773934853870,
+    "nome": "LAÇO ROSA",
+    "preco": 1,
+    "foto": "1773948549723-vi.png.png",
+    "estoque": 10
+  },
+  {
+    "id": 1773939111894,
+    "nome": "LAÇO VERDE",
+    "preco": 1.5,
+    "foto": "1773943528326-insta.png.jpg",
+    "estoque": 15
+  },
+  {
+    "id": 1774012918745,
+    "nome": "LAÇO LUCAS",
+    "preco": 10,
+    "estoque": 1,
+    "foto": "1774012918740-logo.png.png"
+  }
+]
