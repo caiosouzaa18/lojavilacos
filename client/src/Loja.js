@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./loja.css";
 
-const API = "http://localhost:3001";
+const API = "https://vilacos-server.onrender.com";
 
 export default function Loja() {
   const [produtos, setProdutos] = useState([]);
