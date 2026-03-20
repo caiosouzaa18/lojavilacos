@@ -12,7 +12,7 @@ export default function Login({ setAdmin }) {
     setErro("");
     setCarregando(true);
     try {
-      const r = await axios.post("http://localhost:3001/login", { user, pass });
+      const r = await axios.post("https://vilacos-server.onrender.com/login", { user, pass });
       if (r.data.ok) {
         localStorage.setItem("admin", "true");
         setAdmin(true);
