@@ -79,7 +79,7 @@ const upload = multer({
    📥 GET PRODUTOS
 ================================ */
 app.get("/produtos", (req, res) => {
-  const base = process.env.BASE_URL || "http://localhost:3001";
+  const base = process.env.BASE_URL || "https://vilacos-server.onrender.com";
   const lista = produtos.map(p => ({
     ...p,
     foto: p.foto ? `${base}/uploads/${p.foto}` : ""
