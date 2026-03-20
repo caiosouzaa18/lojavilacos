@@ -1,9 +1,8 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import "./loja.css";
 
-const API = "https://vilacos-server.onrender.com";
+const API = "http://localhost:3001";
 
 export default function Loja() {
   const [produtos, setProdutos] = useState([]);
@@ -15,8 +14,8 @@ export default function Loja() {
   const [carrinhoAberto, setCarrinhoAberto] = useState(false);
   const [toast, setToast] = useState({ show: false, msg: "" });
   const toastTimer = useRef(null);
-  const navigate = useNavigate();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { carregar(); }, []);
 
   useEffect(() => {
