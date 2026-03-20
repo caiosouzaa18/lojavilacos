@@ -9,7 +9,7 @@ export default function Admin() {
   const [nome, setNome] = useState("");
   const [preco, setPreco] = useState("");
   const [estoque, setEstoque] = useState("");
-  const [foto, setFoto] = useState(null);
+  const [fotoUrl, setFotoUrl] = useState("");
   const [editando, setEditando] = useState(null);
   const [carregando, setCarregando] = useState(false);
 
@@ -28,19 +28,13 @@ export default function Admin() {
   async function salvar(e) {
     e.preventDefault();
     if (!nome || !preco) return alert("Preencha nome e preço");
-
     setCarregando(true);
-    const formData = new FormData();
-    formData.append("nome", nome);
-    formData.append("preco", preco);
-    formData.append("estoque", estoque);
-    if (foto) formData.append("foto", foto);
-
     try {
+      const dados = { nome, preco, estoque, fotoUrl };
       if (editando) {
-        await axios.put(`${API}/produtos/${editando}`, formData);
+        await axios.put(`${API}/produtos/${editando}`, dados);
       } else {
-        await axios.post(`${API}/produtos`, formData);
+        await axios.post(`${API}/produtos`, dados);
       }
       limpar();
       carregar();
@@ -56,7 +50,7 @@ export default function Admin() {
     setNome(p.nome);
     setPreco(p.preco);
     setEstoque(p.estoque);
-    setFoto(null);
+    setFotoUrl(p.foto || "");
     setEditando(p.id);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -73,7 +67,7 @@ export default function Admin() {
   }
 
   function limpar() {
-    setNome(""); setPreco(""); setEstoque(""); setFoto(null); setEditando(null);
+    setNome(""); setPreco(""); setEstoque(""); setFotoUrl(""); setEditando(null);
   }
 
   function sair() {
@@ -88,7 +82,6 @@ export default function Admin() {
         <button className="btn-sair" onClick={sair}>Sair</button>
       </div>
 
-      {/* FORM */}
       <div className="form-card">
         <h2>{editando ? "✏️ Editar produto" : "➕ Novo produto"}</h2>
         <form onSubmit={salvar} className="form">
@@ -110,10 +103,21 @@ export default function Admin() {
             onChange={e => setEstoque(e.target.value)}
           />
           <input
-            type="file"
-            accept="image/*"
-            onChange={e => setFoto(e.target.files[0])}
+            placeholder="URL da foto (ex: /imagens/laco-rosa.jpg)"
+            value={fotoUrl}
+            onChange={e => setFotoUrl(e.target.value)}
+            style={{ gridColumn: "1 / -1" }}
           />
+          {fotoUrl && (
+            <div style={{ gridColumn: "1 / -1", textAlign: "center" }}>
+              <img
+                src={fotoUrl}
+                alt="preview"
+                style={{ width: 80, height: 80, objectFit: "cover", borderRadius: 10, border: "1px solid #fce8f1" }}
+                onError={e => e.target.style.display = "none"}
+              />
+            </div>
+          )}
           <div className="form-actions">
             <button type="submit" className="btn-salvar" disabled={carregando}>
               {carregando ? "Salvando..." : editando ? "Atualizar produto" : "Cadastrar produto"}
@@ -127,7 +131,6 @@ export default function Admin() {
         </form>
       </div>
 
-      {/* LISTA */}
       <div className="lista-header">
         <h2>Produtos</h2>
         <span className="lista-count">{produtos.length} item{produtos.length !== 1 ? "s" : ""}</span>
