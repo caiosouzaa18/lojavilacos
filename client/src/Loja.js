@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./loja.css";
 
-const API = "http://localhost:3001";
+const API = "https://vilacos-server.onrender.com";
 
 export default function Loja() {
   const [produtos, setProdutos] = useState([]);
